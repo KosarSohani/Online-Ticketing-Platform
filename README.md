@@ -70,8 +70,8 @@ The **Message Broker** provides the infrastructure for asynchronous communicatio
 |**External Service**|**Purpose**|**Connected Service**|
 |---|---|---|
 |Payment Gateway|Online Payment Processing|Payment Service|
-|Email Provider|Email Delivery|Notficaton Service|
-|SMS Gateway|SMS Delivery|Notficaton Service|
+|Email Provider|Email Delivery|Notfication Service|
+|SMS Gateway|SMS Delivery|Notfication Service|
 |Redis|Distributed Seat Locking and<br>Cache|Reservation Service|
 |Kafa / RabbitMQ|Asynchronous Event<br>Communicaton|All Microservices|
 
