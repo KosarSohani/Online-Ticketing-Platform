@@ -41,14 +41,13 @@ The **Message Broker** provides the infrastructure for asynchronous communicatio
 
 |**Microservice**|**Primary**<br>**Responsibility**|**Database**|**Main APIs**|**Published Events**|**Consumed Events**|
 |---|---|---|---|---|---|
-|Authentcaton|Manages user<br>registraton,<br>login,<br>authentcaton,<br>authorizaton,<br>roles,<br>permissions,<br>and JWT token<br>generaton.|PostgreSQL|/register,<br>/login,<br>/logout,<br>/users|UserRegistered|_|
+|Authentication|Manages user<br>registraton,<br>login,<br>authentcaton,<br>authorizaton,<br>roles,<br>permissions,<br>and JWT token<br>generaton.|PostgreSQL|/register,<br>/login,<br>/logout,<br>/users|UserRegistered|_|
 |Event<br>Management|Creates,<br>updates,<br>deletes,<br>publishes, and<br>manages<br>events, venues,<br>halls, seats,<br>and tcket<br>categories.|PostgreSQL|/events,<br>/venues,<br>/categories|EventPublished,<br>EventUpdated,<br>EventCancelled|_|
-|Reservaton|Handles seat<br>reservaton,<br>distributed<br>seat locking,<br>reservaton<br>confrmaton,<br>cancellaton,<br>expiraton,<br>and waitng<br>queue<br>management.|PostgreSQL|/reservaton,<br>/seat-lock,<br>/waitng-<br>queue|ReservatonCreated,<br>ReservatonCancelled,<br>ReservatonConfrmed|PaymentSuccess,<br>PaymentFailed|
+|Reservation|Handles seat<br>reservaton,<br>distributed<br>seat locking,<br>reservaton<br>confrmaton,<br>cancellaton,<br>expiraton,<br>and waitng<br>queue<br>management.|PostgreSQL|/reservaton,<br>/seat-lock,<br>/waitng-<br>queue|ReservatonCreated,<br>ReservatonCancelled,<br>ReservatonConfrmed|PaymentSuccess,<br>PaymentFailed|
 |Payment|Processes<br>payments,<br>verifes<br>transactons,<br>communicates<br>with external<br>payment<br>gateway, and<br>generates<br>invoices.|PostgreSQL<br>+ Redis|/payment,<br>/refund,<br>/invoice|PaymentSuccess,<br>PaymentFailed|ReservatonCreated|
 |Ticket|Generates<br>electronic<br>tckets, QR|PostgreSQL|/tcket,<br>/check-in|TicketGenerated|PaymentSuccess|Codes,<br>validates<br>tckets, and<br>manages<br>event check-in<br>operatons.|||||
-|---|---|---|---|---|---|
-|Notfcaton|Sends Email,<br>SMS, and Push<br>Notfcatons<br>based on<br>system events<br>and records<br>notfcaton<br>history.|PostgreSQL|/notfcaton|NotfcatonSent|TicketGenerated,<br>EventCancelled,<br>PaymentSuccess|
-|Reportng|Produces<br>dashboards,<br>sales reports,<br>atendance<br>reports,<br>revenue<br>analytcs, and<br>exports<br>reports in<br>PDF/Excel<br>format.|PostgreSQL<br>(Read<br>Replica)|/reports,<br>/dashboard|_|PaymentSuccess,<br>TicketGenerated,<br>ReservatonConfrmed|
+|Notificaton|Sends Email,<br>SMS, and Push<br>Notfcatons<br>based on<br>system events<br>and records<br>notfcaton<br>history.|PostgreSQL|/notfcaton|NotfcatonSent|TicketGenerated,<br>EventCancelled,<br>PaymentSuccess|
+|Reporting|Produces<br>dashboards,<br>sales reports,<br>atendance<br>reports,<br>revenue<br>analytcs, and<br>exports<br>reports in<br>PDF/Excel<br>format.|PostgreSQL<br>(Read<br>Replica)|/reports,<br>/dashboard|_|PaymentSuccess,<br>TicketGenerated,<br>ReservatonConfrmed|
 |API Gateway|Entry point for<br>all client<br>requests,<br>request<br>routng,<br>authentcaton<br>verifcaton,<br>rate limitng,<br>logging, and<br>load<br>balancing.|_|/login,<br>/events,<br>/reservaton,<br>/payment,<br>/tcket|_|_|
 |Message<br>Broker|Provides<br>asynchronous<br>communicaton<br>between<br>services<br>through event<br>publishing and<br>event<br>consumpton.|_|Event Bus|Delivers All Events|Receives All Events|
 
@@ -56,13 +55,13 @@ The **Message Broker** provides the infrastructure for asynchronous communicatio
 
 |**Microservice**|**Databases**|
 |---|---|
-|Authentcaton|Users,Roles,Permissions|
+|Authentication|Users,Roles,Permissions|
 |Event Management|Events,Venues,Halls,Seats,Categories|
-|Reservaton|Reservatons,Reservaton Items,Waitng Queue|
+|Reservation|Reservatons,Reservaton Items,Waitng Queue|
 |Payment|Payments,Transactons,Invoices|
 |Ticket|Tickets, QR Codes,Check-in Records|
-|Notfcaton|Notfcaton Logs|
-|Reportng|Aggregated Reports,Analytcs Cache|
+|Notfication|Notfcaton Logs|
+|Reporting|Aggregated Reports,Analytcs Cache|
 
 
 
@@ -71,9 +70,9 @@ The **Message Broker** provides the infrastructure for asynchronous communicatio
 |**External Service**|**Purpose**|**Connected Service**|
 |---|---|---|
 |Payment Gateway|Online Payment Processing|Payment Service|
-|Email Provider|Email Delivery|Notfcaton Service|
-|SMS Gateway|SMS Delivery|Notfcaton Service|
-|Redis|Distributed Seat Locking and<br>Cache|Reservaton Service|
+|Email Provider|Email Delivery|Notficaton Service|
+|SMS Gateway|SMS Delivery|Notficaton Service|
+|Redis|Distributed Seat Locking and<br>Cache|Reservation Service|
 |Kafa / RabbitMQ|Asynchronous Event<br>Communicaton|All Microservices|
 
 
@@ -93,7 +92,6 @@ The **Message Broker** provides the infrastructure for asynchronous communicatio
 |API Documentaton|OpenAPI/Swagger|
 |Build Tool|Maven|
 |Containerizaton|Docker|Container Orchestraton|Kubernetes|
-|---|---|
 |Monitoring|Prometheus + Grafana|
 |Logging|ELK Stack(Elastcsearch,Logstash,Kibana)|
 |CI/CD|GitHub Actons/Jenkins|
